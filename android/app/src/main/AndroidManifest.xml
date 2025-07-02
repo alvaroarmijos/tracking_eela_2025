@@ -6,6 +6,8 @@
         android:label="tracking_eela_2025"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCPklsbDuJIAa8VIHEFBurV6jCpgOJRnnE"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
