@@ -7,13 +7,12 @@ class RunningInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 60,
-      child: Padding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 8),
-        child: Card(
-          elevation: 4,
+    return Expanded(
+      child: SizedBox(
+        width: double.infinity,
+        height: 60,
+        child: Padding(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 8),
           child: BlocBuilder<LocationBloc, LocationState>(
             builder: (context, state) {
               return Row(

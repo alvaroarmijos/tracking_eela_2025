@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_eela_2025/ui/core/theme/app_theme.dart';
 import 'package:tracking_eela_2025/ui/gps/bloc/gps_bloc.dart';
 import 'package:tracking_eela_2025/ui/loading/view/loading_page.dart';
+import 'package:tracking_eela_2025/ui/map/bloc/cubit/search_cubit.dart';
 import 'package:tracking_eela_2025/ui/map/bloc/location_bloc/location_bloc.dart';
 import 'package:tracking_eela_2025/ui/map/bloc/map_cubit/map_cubit.dart';
 
@@ -20,13 +21,14 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       home: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => SearchCubit()),
           BlocProvider(
             create: (context) => GpsBloc()
               ..add(GpsInitialStatusEvent())
               ..add(ChangeGpsStatusEvent()),
           ),
           BlocProvider(create: (context) => LocationBloc()),
-          BlocProvider(create: (context) => MapCubit())
+          BlocProvider(create: (context) => MapCubit()),
         ],
         child: const LoadingPage(),
       ),

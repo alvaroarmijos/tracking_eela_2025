@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracking_eela_2025/ui/map/bloc/cubit/search_cubit.dart';
+import 'package:tracking_eela_2025/ui/map/bloc/location_bloc/location_bloc.dart';
+import 'package:tracking_eela_2025/ui/map/widgets/running_info.dart';
+import 'package:tracking_eela_2025/ui/map/widgets/search_destionation_delegate.dart';
+
+class SearchBarInfo extends StatelessWidget {
+  const SearchBarInfo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 60,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Card(
+          child: Row(
+            children: [
+              const RunningInfo(),
+              IconButton(
+                onPressed: () async {
+                  final searchResult = await showSearch(
+                    context: context,
+                    delegate: SearchDestionationDelegate(),
+                  );
+                  if (searchResult == null ||
+                      searchResult.cancel == true ||
+                      !context.mounted) {
+                    return;
+                  }
+
+                  if (searchResult.manualMarker) {
+                    context.read<SearchCubit>().updateShowManualMarker(true);
+                  }
+                  if (searchResult.place != null) {
+                    final locationBloc = context.read<LocationBloc>();
+                    final start = locationBloc.state.lastKnownLocation;
+
+                    final end = searchResult.place!.center;
+
+                    if (start == null) return;
+                    context.read<SearchCubit>().getRoute(start, end);
+                  }
+                },
+                icon: const Icon(Icons.search),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
